@@ -1,5 +1,5 @@
 import * as readline from "readline";
-import { prompt, promptForInteger } from "../../src/utils/prompter";
+import { prompt, promptForPositiveInteger } from "../../src/utils/prompter";
 
 jest.mock("readline");
 
@@ -40,7 +40,7 @@ describe("promptForInteger function", () => {
 
     it("should return a type of integer", async () => {
         mockQuestion.mockImplementationOnce((_, callback) => callback("6"));
-        const result = await promptForInteger(question);
+        const result = await promptForPositiveInteger(question);
         expect(result).toBe(6);
     });
 
@@ -50,7 +50,7 @@ describe("promptForInteger function", () => {
             .mockImplementationOnce((_, callback) => callback("-5"))
             .mockImplementationOnce((_, callback) => callback("10"));
 
-        const result = await promptForInteger(question);
+        const result = await promptForPositiveInteger(question);
 
         expect(result).toBe(10);
         expect(mockQuestion).toHaveBeenCalledTimes(3);

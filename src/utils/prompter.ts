@@ -13,14 +13,16 @@ export const prompt = (question: string): Promise<string> => {
     });
 };
 
-export const promptForInteger = async (question: string): Promise<number> => {
+export const promptForPositiveInteger = async (
+    question: string
+): Promise<number> => {
     const inputtedValue = await prompt(question);
 
     return new Promise(async (resolve) => {
         const num = parseInt(inputtedValue, 10);
         if (isNaN(num) || num <= 0) {
             console.log("Please enter a valid positive number.\n");
-            resolve(promptForInteger(question));
+            resolve(promptForPositiveInteger(question));
         } else {
             resolve(num);
         }
