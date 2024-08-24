@@ -1,0 +1,18 @@
+{
+    "name": "huridocs-exam-labyrinth",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "tsc --watch",
+        "build": "tsc",
+        "app": "node dist/index.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^22.5.0",
+        "typescript": "^5.5.4"
+    }
+}
