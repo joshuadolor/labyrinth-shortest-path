@@ -26,16 +26,31 @@ class Labyrinth {
             .map(() => new Array(dimension.columns).fill(""));
     }
 
-    setCellValue(pos: Position, value: string): void {
+    setCellValue(pos: Position, value: string): boolean {
         if (!this.isInside(pos)) {
-            throw new Error("error");
+            console.log("Position should be inside the labyrinth");
+            return false;
         }
 
         if (!this.isValidCellType(value)) {
-            throw new Error("error");
+            console.log(
+                `Cell Value: ${value} not valid. \nOnly ${Object.values(
+                    CellType
+                ).join(", ")} characters are valid.`
+            );
+            return false;
+        }
+
+        if (
+            !this.isAtEdge(pos) &&
+            (value === CellType.Exit || value === CellType.Start)
+        ) {
+            console.log("Start or Exit should be at the edge of the labyrinth");
+            return false;
         }
 
         this.grid[pos.row][pos.col] = value;
+        return true;
     }
 
     isValidCellType(value: string): value is CellType {
@@ -55,6 +70,15 @@ class Labyrinth {
         );
     }
 
+    isAtEdge(pos: Position): boolean {
+        const isEdgeRow =
+            pos.row === 0 || pos.row === this.gridDimension.rows - 1;
+        const isEdgeColumn =
+            pos.col === 0 || pos.col === this.gridDimension.columns - 1;
+
+        return isEdgeRow || isEdgeColumn;
+    }
+
     isSolvable(): boolean {
         return this.grid.some((row) => {
             const rowString = row.join(",");
@@ -67,6 +91,10 @@ class Labyrinth {
 
     getGridDimension(): Dimension {
         return this.gridDimension;
+    }
+
+    getGrid(): CellType[][] {
+        return this.grid;
     }
 
     display(): void {

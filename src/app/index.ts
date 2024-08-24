@@ -22,21 +22,30 @@ export default async () => {
         console.log(`\t${value} - ${key}`);
     }
 
-    for (let i = 0; i < rows; i++) {
-        const row = await prompt(`Row ${i + 1}: `);
-        const values = row.split(",").map((value) => value.trim());
+    console.log("Example: S,0,0,0,E (A labyrinth having 5 columns)\n");
+
+    for (let row = 0; row < rows; row++) {
+        const rowValue = await prompt(`Row ${row + 1}: `);
+        const values = rowValue.split(",").map((value) => value.trim());
 
         if (values.length !== columns) {
             console.log(
-                `Row ${i + 1} should have ${columns} values. Please try again.`
+                `Row ${
+                    row + 1
+                } should have ${columns} values. Please try again.`
             );
-            i--;
+            row--;
             continue;
         }
 
-        values.forEach((value, col) => {
-            labyrinth.setCellValue({ row: i, col }, value);
-        });
+        for (let col = 0; col < values.length; col++) {
+            const value = values[col];
+            if (!labyrinth.setCellValue({ row, col }, value)) {
+                console.log(`Enter Row ${row + 1} values again.`);
+                row--;
+                break;
+            }
+        }
     }
 
     labyrinth.display();
