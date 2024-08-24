@@ -1,5 +1,3 @@
-export function display(): string {
-    return "Hello World!";
-}
+import app from "./app";
 
-console.log(display());
+app();
