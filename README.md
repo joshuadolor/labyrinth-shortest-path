@@ -18,10 +18,15 @@
     npm install
     ```
 
-3.  Run the development server with TypeScript compilation:
+3.  Run development mode or build the app:
 
     ```
     npm run dev // in watch mode
+    ```
+
+    or
+
+    ```
     npm run build
     ```
 
