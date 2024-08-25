@@ -8,8 +8,8 @@
 1.  Clone the repository:
 
     ```
-    git clone <repository-url>
-    cd huridocs-exam-labyrinth
+    git clone git@github.com:joshuadolor/labyrinth-shortest-path.git
+    cd labyrinth-shortest-path
     ```
 
 2.  Install dependencies:
