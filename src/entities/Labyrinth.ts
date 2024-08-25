@@ -18,6 +18,8 @@ export type Dimension = {
 class Labyrinth {
     private grid: CellType[][];
     private gridDimension: Dimension;
+    private start: Position | undefined;
+    private exit: Position | undefined;
 
     constructor(dimension: Dimension) {
         this.gridDimension = dimension;
@@ -26,7 +28,7 @@ class Labyrinth {
             .map(() => new Array(dimension.columns).fill(""));
     }
 
-    setCellValue(pos: Position, value: string): boolean {
+    public setCellValue(pos: Position, value: string): boolean {
         if (!this.isInside(pos)) {
             console.log("Position should be inside the labyrinth");
             return false;
@@ -49,19 +51,27 @@ class Labyrinth {
             return false;
         }
 
+        if (value === CellType.Exit) {
+            this.exit = pos;
+        }
+
+        if (value === CellType.Start) {
+            this.start = pos;
+        }
+
         this.grid[pos.row][pos.col] = value;
         return true;
     }
 
-    isValidCellType(value: string): value is CellType {
+    public isValidCellType(value: string): value is CellType {
         return Object.values(CellType).includes(value as CellType);
     }
 
-    isWall(p: Position): boolean {
+    public isWall(p: Position): boolean {
         return this.grid[p.row][p.col] === CellType.Wall;
     }
 
-    isInside(pos: Position): boolean {
+    public isInside(pos: Position): boolean {
         return (
             pos.row >= 0 &&
             pos.row < this.gridDimension.rows &&
@@ -70,7 +80,7 @@ class Labyrinth {
         );
     }
 
-    isAtEdge(pos: Position): boolean {
+    public isAtEdge(pos: Position): boolean {
         const isEdgeRow =
             pos.row === 0 || pos.row === this.gridDimension.rows - 1;
         const isEdgeColumn =
@@ -79,25 +89,27 @@ class Labyrinth {
         return isEdgeRow || isEdgeColumn;
     }
 
-    isSolvable(): boolean {
-        return this.grid.some((row) => {
-            const rowString = row.join(",");
-            return (
-                rowString.includes(CellType.Start) ||
-                rowString.includes(CellType.Exit)
-            );
-        });
+    public isSolvable(): boolean {
+        return !!this.getStart() && !!this.getExit();
     }
 
-    getGridDimension(): Dimension {
+    public getGridDimension(): Dimension {
         return this.gridDimension;
     }
 
-    getGrid(): CellType[][] {
+    public getStart(): Position | undefined {
+        return this.start;
+    }
+
+    public getExit(): Position | undefined {
+        return this.exit;
+    }
+
+    public getGrid(): CellType[][] {
         return this.grid;
     }
 
-    display(): void {
+    public display(): void {
         this.grid.forEach((row) => {
             console.log(row.join("\t"));
         });

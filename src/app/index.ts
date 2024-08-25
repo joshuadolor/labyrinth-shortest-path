@@ -1,4 +1,5 @@
 import Labyrinth, { CellType } from "../entities/Labyrinth";
+import LabyrinthSolver from "../services/LabyrinthSolver";
 import { promptForPositiveInteger, prompt } from "../utils/prompter";
 
 export default async () => {
@@ -48,5 +49,10 @@ export default async () => {
         }
     }
 
+    const solver = new LabyrinthSolver(labyrinth);
     labyrinth.display();
+    console.log(`
+==========================================
+Shortest Path: ${solver.getShortestPath()}
+    `);
 };
