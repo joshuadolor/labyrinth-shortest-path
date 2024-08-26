@@ -119,6 +119,26 @@ describe("LabyrinthSolver's ", () => {
         expect(solver.getShortestPath()).toBe(8);
     });
 
+    it("getShortestPath should return a correct number of moves, if labyrinth's start and exit is beside each other", () => {
+        labyrinth = new Labyrinth({ rows: 3, columns: 3 });
+        const unsolvableLabyrinth = [
+            [CellType.Start, CellType.OpenPath, CellType.Wall],
+            [CellType.Exit, CellType.OpenPath, CellType.Wall],
+            [CellType.Wall, CellType.OpenPath, CellType.OpenPath],
+        ];
+        for (let i = 0; i < unsolvableLabyrinth.length; i++) {
+            for (let j = 0; j < unsolvableLabyrinth[i].length; j++) {
+                labyrinth.setCellValue(
+                    { row: i, col: j },
+                    unsolvableLabyrinth[i][j]
+                );
+            }
+        }
+
+        solver = new LabyrithSolver(labyrinth);
+        expect(solver.getShortestPath()).toBe(1);
+    });
+
     // test private methods??
     // it("isMoveValid should return true if a move is valid", () => {});
 });

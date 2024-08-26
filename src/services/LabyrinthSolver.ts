@@ -47,8 +47,12 @@ class LabyrinthSolver {
 
         remainingMoves.forEach((move) => {
             const newPlayer = new Player(move, player.getPositionHistory());
-            this.explorePath(newPlayer);
             this.players.push(newPlayer);
+            if (exitPosition && newPlayer.isAtPosition(exitPosition)) {
+                newPlayer.setExited(true);
+                return;
+            }
+            this.explorePath(newPlayer);
         });
 
         this.explorePath(player);
