@@ -1,6 +1,7 @@
 import Labyrinth, { CellType } from "../entities/Labyrinth";
 import LabyrinthSolver from "../services/LabyrinthSolver";
 import { promptForPositiveInteger, prompt } from "../utils/prompter";
+import { hasDuplicateCharacter } from "../utils/string-helpers";
 
 export default async () => {
     console.log("Welcome to the Labyrinth Escape!");
@@ -27,6 +28,18 @@ export default async () => {
 
     for (let row = 0; row < rows; row++) {
         const rowValue = await prompt(`Row ${row + 1}: `);
+
+        if (
+            hasDuplicateCharacter(rowValue, CellType.Start) ||
+            hasDuplicateCharacter(rowValue, CellType.Exit)
+        ) {
+            console.log(
+                `Your labyrinth should have only one start and one exit. Please try again.`
+            );
+            row--;
+            continue;
+        }
+
         const values = rowValue.split(",").map((value) => value.trim());
 
         if (values.length !== columns) {
@@ -50,9 +63,9 @@ export default async () => {
     }
 
     const solver = new LabyrinthSolver(labyrinth);
+    console.log("==============================");
+    console.log("Your Labyrinth: \n");
     labyrinth.display();
-    console.log(`
-==========================================
-Shortest Path: ${solver.getShortestPath()}
-    `);
+    console.log("==============================");
+    console.log(`Shortest Path: ${solver.getShortestPath()}`);
 };

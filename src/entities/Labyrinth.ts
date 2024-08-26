@@ -51,6 +51,16 @@ class Labyrinth {
             return false;
         }
 
+        if (this.start && value === CellType.Start) {
+            console.log("There should only be one start");
+            return false;
+        }
+
+        if (this.exit && value === CellType.Exit) {
+            console.log("There should only be one exit");
+            return false;
+        }
+
         if (value === CellType.Exit) {
             this.exit = pos;
         }
