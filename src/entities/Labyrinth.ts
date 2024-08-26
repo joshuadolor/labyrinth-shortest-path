@@ -15,8 +15,10 @@ export type Dimension = {
     columns: number;
 };
 
+type LabyrinthGrid = CellType | null;
+
 class Labyrinth {
-    private grid: CellType[][];
+    private grid: LabyrinthGrid[][];
     private gridDimension: Dimension;
     private start: Position | undefined;
     private exit: Position | undefined;
@@ -25,7 +27,7 @@ class Labyrinth {
         this.gridDimension = dimension;
         this.grid = new Array(dimension.rows)
             .fill(null)
-            .map(() => new Array(dimension.columns).fill(""));
+            .map(() => new Array(dimension.columns).fill(null));
     }
 
     public setCellValue(pos: Position, value: string): boolean {
@@ -115,7 +117,7 @@ class Labyrinth {
         return this.exit;
     }
 
-    public getGrid(): CellType[][] {
+    public getGrid(): LabyrinthGrid[][] {
         return this.grid;
     }
 
