@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "tsc --watch",
-        "dev:test": "jest --watch",
+        "dev:test": "jest --watch --silent",
         "test": "jest",
         "build": "tsc",
         "app": "node dist/index.js"
